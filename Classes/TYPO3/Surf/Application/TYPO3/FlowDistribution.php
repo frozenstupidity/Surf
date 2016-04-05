@@ -204,6 +204,7 @@ class FlowDistribution extends \TYPO3\Surf\Application\TYPO3\Flow {
 				'releaseHost' =>  $this->getOption('releaseHost'),
 				'releaseHostSitePath' => $this->getOption('releaseHostSitePath'),
 				'releaseHostLogin' =>  $this->hasOption('releaseHostLogin') ? $this->getOption('releaseHostLogin') : NULL,
+				'releaseHostPort' =>  $this->hasOption('releaseHostPort') ? $this->getOption('releaseHostPort') : NULL,
 				'productName' => $this->getOption('projectName'),
 				'version' => $this->getOption('version'),
 				'label' => $this->getOption('releaseDownloadLabel'),

@@ -37,12 +37,13 @@ class ReleaseTask extends PrepareReleaseTask {
 		$this->checkOptionsForValidity($options);
 		$host = $options['releaseHost'];
 		$login = $options['releaseHostLogin'];
+		$port = $options['releaseHostPort'];
 		$changeLogUri = $options['changeLogUri'];
 		$sitePath =  $options['releaseHostSitePath'];
 		$version = $options['version'];
 		$productName = $options['productName'];
 
-		$this->shell->executeOrSimulate(sprintf('ssh %s%s "cd \"%s\" ; ./flow release:release --product-name \"%s\" --version \"%s\" --change-log-uri \"%s\""', ($login ? $login . '@' : ''), $host, $sitePath, $productName, $version, ($changeLogUri ? $changeLogUri : '')), $node, $deployment);
+		$this->shell->executeOrSimulate(sprintf('ssh %s%s%s "cd \"%s\" ; ./flow release:release --product-name \"%s\" --version \"%s\" --change-log-uri \"%s\""', ($port ? '-p ' . $port . ' ' : ''), ($login ? $login . '@' : ''), $host, $sitePath, $productName, $version, ($changeLogUri ? $changeLogUri : '')), $node, $deployment);
 	}
 }
 ?>

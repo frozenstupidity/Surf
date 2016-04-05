@@ -37,11 +37,12 @@ class PrepareReleaseTask extends \TYPO3\Surf\Domain\Model\Task {
 		$this->checkOptionsForValidity($options);
 		$host = $options['releaseHost'];
 		$login = $options['releaseHostLogin'];
+		$port = $options['releaseHostPort'];
 		$sitePath =  $options['releaseHostSitePath'];
 		$version = $options['version'];
 		$productName = $options['productName'];
 
-		$this->shell->executeOrSimulate(sprintf('ssh %s%s "cd \"%s\" ; ./flow release:preparerelease --product-name \"%s\" --version \"%s\""', ($login ? $login . '@' : ''), $host, $sitePath, $productName, $version), $node, $deployment);
+		$this->shell->executeOrSimulate(sprintf('ssh %s%s%s "cd \"%s\" ; ./flow release:preparerelease --product-name \"%s\" --version \"%s\""', ($port ? '-p ' . $port . ' ' : ''), ($login ? $login . '@' : ''), $host, $sitePath, $productName, $version), $node, $deployment);
 	}
 
 	/**

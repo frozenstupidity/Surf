@@ -37,6 +37,7 @@ class AddDownloadTask extends \TYPO3\Surf\Domain\Model\Task {
 		$this->checkOptionsForValidity($options);
 		$host = $options['releaseHost'];
 		$login = $options['releaseHostLogin'];
+		$port = $options['releaseHostPort'];
 		$sitePath =  $options['releaseHostSitePath'];
 		$version = $options['version'];
 		$label = $options['label'];
@@ -48,7 +49,7 @@ class AddDownloadTask extends \TYPO3\Surf\Domain\Model\Task {
 		foreach ($files as $file) {
 			$downloads[] = sprintf('"%s,%s,%s"', basename($file), sha1($file), sprintf($uriPattern, basename($file)));
 		}
-		$this->shell->executeOrSimulate(sprintf('ssh %s%s "cd \"%s\" ; ./flow release:adddownload --product-name \"%s\" --version \"%s\" --label \"%s\" %s"', ($login ? $login . '@' : ''), $host, $sitePath, $productName, $version, $label, implode(' ', $downloads)), $node, $deployment);
+		$this->shell->executeOrSimulate(sprintf('ssh %s%s%s "cd \"%s\" ; ./flow release:adddownload --product-name \"%s\" --version \"%s\" --label \"%s\" %s"', ($port ? '-p ' . $port . ' ' : ''), ($login ? $login . '@' : ''), $host, $sitePath, $productName, $version, $label, implode(' ', $downloads)), $node, $deployment);
 	}
 
 	/**
